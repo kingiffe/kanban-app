@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待辦事項 · 日式極簡看板</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app-container">
+    <header class="app-header">
+      <div class="title-group">
+        <h1>待辦事項看板</h1>
+        <p class="subtitle">日々の務め · 拖曳卡片管理進度 · 依優先級自動排序</p>
+      </div>
+      <div class="stats-badge" id="todo-stats" aria-live="polite">
+        尚有 <span id="remaining-count">0</span> 項未完成
+      </div>
+    </header>
+
+    <form id="todo-form" class="todo-form" autocomplete="off">
+      <div class="input-row-main">
+        <input
+          type="text"
+          id="todo-input"
+          class="input-text"
+          placeholder="輸入新的待辦任務（預設加入 To-do）..."
+          required
+          aria-label="任務內容"
+        >
+      </div>
+      <div class="input-row-meta">
+        <div class="field-group assignee-group">
+          <label for="todo-assignee" class="sr-only">負責人</label>
+          <input
+            type="text"
+            id="todo-assignee"
+            class="input-assignee"
+            placeholder="負責人（選填）"
+            aria-label="負責人"
+          >
+        </div>
+        <div class="field-group priority-group">
+          <label for="todo-priority" class="sr-only">優先程度</label>
+          <select id="todo-priority" class="select-priority" aria-label="任務優先程度">
+            <option value="high">High (高)</option>
+            <option value="medium" selected>Medium (中)</option>
+            <option value="low">Low (低)</option>
+          </select>
+        </div>
+        <div class="field-group category-group">
+          <label for="todo-category" class="sr-only">分類</label>
+          <select id="todo-category" class="select-category" aria-label="任務分類">
+            <option value="work">工作</option>
+            <option value="life">生活</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-add">新增任務</button>
+      </div>
+    </form>
+
+    <nav class="filter-bar" aria-label="任務分類篩選">
+      <div class="filter-tabs" role="tablist">
+        <button type="button" class="filter-tab active" data-filter="all" role="tab" aria-selected="true">
+          全部 <span class="tab-count" id="count-all">0</span>
+        </button>
+        <button type="button" class="filter-tab" data-filter="work" role="tab" aria-selected="false">
+          工作 <span class="tab-count" id="count-work">0</span>
+        </button>
+        <button type="button" class="filter-tab" data-filter="life" role="tab" aria-selected="false">
+          生活 <span class="tab-count" id="count-life">0</span>
+        </button>
+      </div>
+    </nav>
+
+    <section class="kanban-board" aria-label="任務狀態看板">
+      <!-- Column 1: To-do -->
+      <div class="kanban-column" data-status="todo">
+        <header class="column-header">
+          <div class="column-title-wrap">
+            <span class="status-dot dot-todo" aria-hidden="true"></span>
+            <h2 class="column-title">To-do</h2>
+          </div>
+          <span class="column-count" id="col-count-todo">0</span>
+        </header>
+        <ul class="kanban-list" id="list-todo" data-status="todo" aria-label="To-do 任務清單"></ul>
+      </div>
+
+      <!-- Column 2: Process -->
+      <div class="kanban-column" data-status="process">
+        <header class="column-header">
+          <div class="column-title-wrap">
+            <span class="status-dot dot-process" aria-hidden="true"></span>
+            <h2 class="column-title">Process</h2>
+          </div>
+          <span class="column-count" id="col-count-process">0</span>
+        </header>
+        <ul class="kanban-list" id="list-process" data-status="process" aria-label="Process 任務清單"></ul>
+      </div>
+
+      <!-- Column 3: Done -->
+      <div class="kanban-column" data-status="done">
+        <header class="column-header">
+          <div class="column-title-wrap">
+            <span class="status-dot dot-done" aria-hidden="true"></span>
+            <h2 class="column-title">Done</h2>
+          </div>
+          <span class="column-count" id="col-count-done">0</span>
+        </header>
+        <ul class="kanban-list" id="list-done" data-status="done" aria-label="Done 任務清單"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
